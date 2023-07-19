@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+using System.Net;
+ 
+namespace WindowsFormsApplication2
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+ 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+ 
+        }
+ 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+ 
+        }
+ 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            
+ 
+            string add1 = textBox1.Text;
+            HttpWebRequest req1 = (HttpWebRequest)WebRequest.Create(add1);
+ 
+            HttpWebResponse res1 = (HttpWebResponse)req1.GetResponse();
+ 
+            if (res1.StatusCode==HttpStatusCode.OK)
+            {
+                Stream str1 = res1.GetResponseStream();
+                StreamReader read1 = new StreamReader(str1);
+ 
+                string data1 = read1.ReadToEnd();
+ 
+                richTextBox1.Text = data1;
+            }
+ 
+            label5.Text = richTextBox1.Text.Length.ToString();
+ 
+            label5.Text = richTextBox1.Text.IndexOf(textBox2.Text).ToString();
+ 
+            string s1 = richTextBox1.Text;
+            int a1 = s1.IndexOf(textBox2.Text);
+            string s2 = s1.Substring(a1 + textBox2.Text.Length, 6);
+           // MessageBox.Show(s2);
+            label3.Text = s2;
+        }
+    }
+}
